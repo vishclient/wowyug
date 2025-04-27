@@ -37,7 +37,12 @@ class SocketService {
   onGetMessage(callback) {
     if (this.socket) {
       this.socket.on("getMessage", (message) => {
-        callback(message);
+        // Make sure the message has a senderUsername
+        const enhancedMessage = {
+          ...message,
+          senderUsername: message.senderUsername || "Unknown User",
+        };
+        callback(enhancedMessage);
       });
     }
   }
